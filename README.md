@@ -19,13 +19,9 @@
 - Animations for game transitions, feedback, and interactions
 - Designed for accessibility, clarity, and fun
 
-## 🎮 Games (Examples)
+## 🎮 Current Puzzles
 
-- **Toggle Puzzle** – Flip tiles to match a target pattern with limited moves
-- **Path Builder** – Create a valid route from start to goal under constraints
-- **Resource Logic** – Distribute limited actions to achieve multiple objectives
-
-*More puzzle types coming soon!*
+*More puzzle types coming soon! Submit yours as well!*
 
 ## 📦 Getting Started
 
