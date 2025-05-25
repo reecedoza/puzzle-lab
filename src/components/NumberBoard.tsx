@@ -1,53 +1,33 @@
-type Board = number[][];
+import React from 'react';
+import { puzzleStateMachine } from '../machines/gameMachine';
+import { useMachine } from '@xstate/react';
 
-function findEmptyPosition(board: Board): [number, number] {
-    for (let row = 0; row < board.length; row++) {
-        for(let col = 0; col < board[row].length; col++) {
-            if(board[row][col] === 0) {
-                return [row, col];
-            }
-        }
-    }
+export const SlidingPuzzle: React.FC = () => {
+    const [state, send] = useMachine(puzzleStateMachine)
 
-    throw new Error('Empty position not found');
-}
+    const handleTileClick = (row: number, col: number) => {
+        send({ type: 'MOVE_TILE', row, col });
+    };
 
-function canMoveTile(board: Board, tileRow: number, tileCol: number): boolean {
-    const [emptyRow, emptyCol] = findEmptyPosition(board);
+    return (
+        <div className='puzzle-container'>
+            <h2>Sliding Puzzle</h2>
+            <p>Moves: {state.context.moves}</p>
 
-    // adjacent tile should have 
-    // same row with 1 col difference or 
-    // 1 row difference with the same col
-    const rowDiff = Math.abs(tileRow - emptyRow);
-    const colDiff = Math.abs(tileCol - emptyCol);
-    return (rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1);
-}
-
-function moveTile(board: Board, tileRow: number, tileCol: number): Board {
-    if (!canMoveTile(board, tileRow, tileCol)) {
-        return board; // Could return the original since no change needed
-    }
-    
-    const newBoard = board.map(row => [...row]);
-    const [emptyRow, emptyCol] = findEmptyPosition(board);
-
-    const tileValue = newBoard[tileRow][tileCol];
-    newBoard[tileRow][tileCol] = 0;
-    newBoard[emptyRow][emptyCol] = tileValue;
-
-    return newBoard
-}
-
-function isSolved(board: Board): boolean {
-    const solvedBoard = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0]];
-
-    for (let row = 0; row < board.length; row++) {
-        for (let col = 0; col < board[row].length; col++) {
-            if (board[row][col] !== solvedBoard[row][col]) {
-                return false;
-            }
-        }
-    }
-    
-    return true;
+            <div className={`board ${state.value}`}>
+                {state.context.board.map((row, rowIndex)=> 
+                    row.map((tile, colIndex) => (
+                        <div 
+                            key={`${rowIndex}-${colIndex}`}
+                            className={`tile ${tile === 0 ? 'empty' : ''}`}
+                            onClick={() => handleTileClick(rowIndex, colIndex)}
+                        >
+                            {tile === 0 ? '': tile}
+                        </div>
+                    ))
+                )}
+            </div>
+            {/* { TODO: Render board and buttons } */}
+        </div>
+    )
 }
