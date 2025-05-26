@@ -9,6 +9,18 @@ export const SlidingPuzzle: React.FC = () => {
         send({ type: 'MOVE_TILE', row, col });
     };
 
+    const handleStartGame = (): void => {
+        send({ type: 'START_GAME' });
+    };
+
+    const handlePlayAgain = (): void => {
+        send({ type: 'PLAY_AGAIN' });
+    };
+
+    const handleRestart = (): void => {
+        send({ type: 'RESTART' });
+    };
+
     return (
         <div className='puzzle-container'>
             <h2>Sliding Puzzle</h2>
@@ -26,7 +38,30 @@ export const SlidingPuzzle: React.FC = () => {
                         </div>
                     ))
                 )}
+                {state.value === 'idle' && (
+                    <div className='overlay start-overlay'>
+                        <button onClick={handleStartGame} className='start-button'>
+                            Start Game
+                        </button>
+                    </div>
+                )}
+                {state.value === 'won' && (
+                    <div className="overlay win-overlay">
+                        <div className="win-content">
+                            <h3>🎉 Congratulations! 🎉</h3>
+                            <p>You solved it in {state.context.moves} moves!</p>
+                            <button onClick={handlePlayAgain} className="play-again-button">
+                                Play Again
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
+            {state.value === 'playing' && (
+                <button onClick={handleRestart} className="restart-button">
+                    Restart
+                </button>
+            )}
             {/* { TODO: Render board and buttons } */}
         </div>
     )
