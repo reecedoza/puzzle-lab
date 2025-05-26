@@ -58,7 +58,7 @@ const SlidingPuzzle = () => {
         )}
         
         {state.value === 'idle' && (
-          <div className='puzzle-overlay bg-green-500 bg-opacity-90'>
+          <div className='puzzle-overlay bg-green-500/80'>
             <button 
               onClick={handleStartGame} 
               className='flex items-center space-x-2 px-6 py-3 bg-white text-green-600 font-bold rounded-lg hover:scale-105 transition-transform'
@@ -70,7 +70,7 @@ const SlidingPuzzle = () => {
         )}
         
         {state.value === 'won' && (
-          <div className="puzzle-overlay bg-yellow-400 bg-opacity-90">
+          <div className="puzzle-overlay bg-yellow-400/80">
             <div className="flex flex-col items-center text-center text-gray-800">
               <h3 className="text-2xl font-bold mb-2">🎉 Congratulations! 🎉</h3>
               <p className="text-lg mb-4">You solved it in {state.context.moves} moves!</p>
