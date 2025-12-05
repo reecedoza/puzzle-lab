@@ -1,4 +1,4 @@
-import { Grid3X3 } from "lucide-react";
+import { Grid3X3, Image } from "lucide-react";
 import { Link } from "react-router";
 
 const HomePage = () => {
@@ -11,6 +11,15 @@ const HomePage = () => {
             icon: Grid3X3,
             color: 'bg-green-500 hover:bg-green-600',
             iconColor: 'text-green-600'
+        },
+        {
+            id: 'picture',
+            name: 'Picture Puzzle',
+            description: 'Sliding puzzle with images',
+            path: '/puzzles/picture',
+            icon: Image,
+            color: 'bg-orange-500 hover:bg-orange-600',
+            iconColor: 'text-orange-600'
         }
     ]
     

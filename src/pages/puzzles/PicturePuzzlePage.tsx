@@ -1,8 +1,8 @@
 import { Link } from 'react-router'
 import { ArrowLeft } from 'lucide-react'
-import SlidingPuzzle from '../../components/puzzles/sliding/SlidingPuzzle'
+import PicturePuzzle from '../../components/puzzles/picture/PicturePuzzle'
 
-const SlidingPuzzlePage = () => {
+const PicturePuzzlePage = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
       <div className="max-w-2xl mx-auto">
@@ -14,10 +14,10 @@ const SlidingPuzzlePage = () => {
           Back to Puzzles
         </Link>
 
-        <SlidingPuzzle />
+        <PicturePuzzle />
       </div>
     </div>
   )
 }
 
-export default SlidingPuzzlePage
+export default PicturePuzzlePage

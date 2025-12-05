@@ -1,11 +1,11 @@
-import { puzzleStateMachine } from '../../machines/gameMachine';
+import { slidingPuzzleStateMachine } from '../../../machines/slidingPuzzleMachine';
 import { useMachine } from '@xstate/react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Play, RotateCcw } from 'lucide-react';
 import './SlidingPuzzle.css'
 
-const SlidingPuzzle = () => {
-    const [state, send] = useMachine(puzzleStateMachine)
+const SlidingPuzzle: React.FC = () => {
+    const [state, send] = useMachine(slidingPuzzleStateMachine)
 
     const handleTileClick = (row: number, col: number) => {
         send({ type: 'MOVE_TILE', row, col });

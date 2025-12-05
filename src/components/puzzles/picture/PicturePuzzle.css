@@ -1,0 +1,41 @@
+.picture-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2px;
+    width: 240px;
+    height: 240px;
+    background-color: #333;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+}
+
+.picture-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: 300% 300%;
+    border-radius: 4px;
+    cursor: pointer;
+
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.picture-tile.empty {
+    background-image: none !important;
+    background-color: rgba(0,0,0,0.3);
+    cursor: default;
+}
+
+.tile-1 { background-position: 0% 0%; }
+.tile-2 { background-position: 50% 0%; }
+.tile-3 { background-position: 100% 0%; }
+.tile-4 { background-position: 0% 50%; }
+.tile-5 { background-position: 50% 50%; }
+.tile-6 { background-position: 100% 50%; }
+.tile-7 { background-position: 0% 100%; }
+.tile-8 { background-position: 50% 100%; }
