@@ -2,8 +2,11 @@ import { useMachine } from '@xstate/react';
 import { picturePuzzleStateMachine } from '../../../machines/picturePuzzleMachine';
 import './PicturePuzzle.css';
 import { Play, RotateCcw } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const MACHU_PICHU_IMAGE = 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=600&h=600&fit=crop';
+const TILE_SIZE = 75;
+const GAP = 2; // Gap between tiles
 
 const PicturePuzzle: React.FC = () => {
     const [state, send] = useMachine(picturePuzzleStateMachine);
@@ -20,24 +23,42 @@ const PicturePuzzle: React.FC = () => {
         send({ type: 'PLAY_AGAIN' })
     }
 
-    const handleTileClick = (row: number, col: number) => {
-        send({ type: 'MOVE_TILE', row, col })
+    const handleTileClick = (tileId: number) => {
+        if(state.value === 'playing') {
+            send({ type: 'MOVE_TILE', tileId })
+        }
     }
+
+    const getTilePosition = (row: number, col: number) => ({
+        x: col * (TILE_SIZE + GAP),
+        y: row * (TILE_SIZE + GAP)
+    })
 
     return (
         <div className='flex flex-col items-center space-y-4 p-6'>
             <h2 className='text-center text-gray-800'>Picture Puzzle</h2>
-            <div className="picture-board">
-                {state.context.board.map((row, rowIndex) => 
-                    row.map((tile, colIndex) => (
-                        <div 
-                            key={`${rowIndex}-${colIndex}`}
-                            className={`picture-tile ${tile === 0 ? 'empty' : `tile-${tile}`}`}
-                            style={{backgroundImage: tile === 0 ? 'none' : `url(${MACHU_PICHU_IMAGE})`}}
-                            onClick={() => handleTileClick(rowIndex, colIndex)}>
-                        </div>
-                    ))
-                )}
+            <div className="picture-board-container">
+                {state.context.tiles.map((tile) => {
+                    const position = getTilePosition(tile.row, tile.col);
+                    return (
+                        <motion.div 
+                            key={tile.id}
+                            className={`picture-tile-absolute tile-${tile.id}`}
+                            style={{
+                                backgroundImage: `url(${MACHU_PICHU_IMAGE})`,
+                                x: position.x,
+                                y: position.y
+                            }}
+                            animate={{ x: position.x, y: position.y }}
+                            transition={{
+                                type: "tween",
+                                duration: 0.15,
+                                ease: "easeInOut"
+                            }}
+                            onClick={() => handleTileClick(tile.id)}>
+                        </motion.div>
+                    )
+                })}
 
                 {state.value === 'idle' && (
                     <div className='puzzle-overlay bg-green-500/80'>
